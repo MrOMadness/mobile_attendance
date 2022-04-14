@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../styles.dart';
 
+// Template for rounded box
 class RoundedBoxTemplate extends StatelessWidget {
   final String title;
   final String data;

@@ -22,16 +22,18 @@ class ChangeHQLocationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(children: [
+        // Google Map
         GoogleMap(
           initialCameraPosition: CameraPosition(
             target: LatLng(latitude, longitude),
-            zoom: 18,
+            zoom: 18, // set zoom level
           ),
           myLocationEnabled: true,
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
           },
         ),
+        // Pin marker
         const Center(
           child: Positioned(
             child: Icon(
@@ -41,6 +43,7 @@ class ChangeHQLocationScreen extends StatelessWidget {
             ),
           ),
         ),
+        // Back Button
         Positioned(
           width: 50,
           height: 50,
@@ -55,17 +58,21 @@ class ChangeHQLocationScreen extends StatelessWidget {
           ),
         ),
       ]),
+      // Save New Location
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 30),
         child: FloatingActionButton.extended(
           onPressed: () async {
-            LatLng _currentCenter = await getCenter();
+            LatLng _currentCenter =
+                await getCenter(); // Get lat and lng on pin marker
 
+            // Update HQ document in firestore
             constants.doc('HQ').set({
               'latitude': _currentCenter.latitude,
               'longitude': _currentCenter.longitude,
               'last_update': DateTime.now()
             }).then((value) {
+              // Add Successful toast
               Fluttertoast.showToast(
                 msg: "Location saved successfully",
                 toastLength: Toast.LENGTH_SHORT,
@@ -74,11 +81,13 @@ class ChangeHQLocationScreen extends StatelessWidget {
               Navigator.of(context).pop();
               // ignore: invalid_return_type_for_catch_error
             }).catchError((error) => Fluttertoast.showToast(
-                  msg: "Failed to add constant: $error",
+                  // Add Failure toast
+                  msg: "Failed to save location: $error",
                   toastLength: Toast.LENGTH_SHORT,
                   gravity: ToastGravity.CENTER,
                 ));
           },
+          // Label for floating action button
           label: const Text(
             'Save New Location',
             style: Styles.white_14,

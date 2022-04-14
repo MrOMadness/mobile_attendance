@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 
+// Style page
 class Styles {
   static const String poppinsFont = 'poppins';
   static const int lightBlue = 0xffD8E3E7;

@@ -35,10 +35,10 @@ class _NavBarState extends State<NavBar> {
           Icons.qr_code_scanner_outlined,
           color: Colors.black,
         ),
-        // backgroundColor: const Color(Styles.lightBlue),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: AnimatedBottomNavigationBar(
+        // Library from AnimatedBottomNavigationBar
         icons: iconList,
         activeIndex: _selectedIndex,
         gapLocation: GapLocation.center,
@@ -51,4 +51,4 @@ class _NavBarState extends State<NavBar> {
   }
 }
 
-const iconList = [Icons.home, Icons.account_circle];
+const iconList = [Icons.home, Icons.account_circle]; // Icons for bottom nav bar

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Template for app bar that only have back arrow
 class AppBarDefault extends StatelessWidget with PreferredSizeWidget {
   const AppBarDefault({Key? key}) : super(key: key);
 

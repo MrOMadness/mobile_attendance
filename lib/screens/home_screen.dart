@@ -11,6 +11,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // Stream of DocumentSnapshot from firebase
   final Stream<DocumentSnapshot> _constantsStream =
       FirebaseFirestore.instance.collection('constants').doc('HQ').snapshots();
 
@@ -20,10 +21,11 @@ class _HomeScreenState extends State<HomeScreen> {
         stream: _constantsStream,
         builder:
             (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          // error screen
           if (snapshot.hasError) {
             return const Text('Something went wrong');
           }
-
+          // loading screen
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Text("Loading");
           }
