@@ -5,28 +5,27 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobile_attendance/styles.dart';
 
-class ChangeHQLocationScreen extends StatefulWidget {
-  const ChangeHQLocationScreen({Key? key}) : super(key: key);
+class ChangeHQLocationScreen extends StatelessWidget {
+  final double latitude;
+  final double longitude;
 
-  @override
-  State<ChangeHQLocationScreen> createState() => _ChangeHQLocationScreenState();
-}
+  ChangeHQLocationScreen(this.latitude, this.longitude, {Key? key})
+      : super(key: key);
 
-class _ChangeHQLocationScreenState extends State<ChangeHQLocationScreen> {
   final Completer<GoogleMapController> _controller = Completer();
-
-  static const CameraPosition savedLocation = CameraPosition(
-    target:
-        LatLng(-6.266568170668484, 106.64808394387364), //TODO: tarik val dri db
-    zoom: 18,
-  );
+  // Collection reference from firebase
+  final CollectionReference constants =
+      FirebaseFirestore.instance.collection('constants');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(children: [
         GoogleMap(
-          initialCameraPosition: savedLocation,
+          initialCameraPosition: CameraPosition(
+            target: LatLng(latitude, longitude),
+            zoom: 18,
+          ),
           myLocationEnabled: true,
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
@@ -60,8 +59,6 @@ class _ChangeHQLocationScreenState extends State<ChangeHQLocationScreen> {
         child: FloatingActionButton.extended(
           onPressed: () async {
             LatLng _currentCenter = await getCenter();
-            CollectionReference constants =
-                FirebaseFirestore.instance.collection('constants');
 
             constants
                 .doc('HQ')
@@ -70,7 +67,7 @@ class _ChangeHQLocationScreenState extends State<ChangeHQLocationScreen> {
                   'longitude': _currentCenter.longitude,
                   'last_update': DateTime.now()
                 })
-                .then((value) => print("Constant added"))
+                .then((value) => print("Constant added")) // Add popup
                 .catchError((error) => print("Failed to add constant: $error"));
           },
           label: const Text(

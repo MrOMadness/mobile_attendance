@@ -21,10 +21,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const ChangeHQLocationScreen()),
+                        builder: (context) => ChangeHQLocationScreen(132, -12)),
                   );
                 },
-                child: RoundedBoxTemplate('Current Location', ''))
+                child: const RoundedBoxTemplate('Current Location', ''))
           ]),
     );
   }

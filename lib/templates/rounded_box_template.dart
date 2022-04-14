@@ -1,14 +1,12 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 
 import '../styles.dart';
 
 class RoundedBoxTemplate extends StatelessWidget {
-  String title;
-  String data;
+  final String title;
+  final String data;
 
-  RoundedBoxTemplate(this.title, this.data, {Key? key}) : super(key: key);
+  const RoundedBoxTemplate(this.title, this.data, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
