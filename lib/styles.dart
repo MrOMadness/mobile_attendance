@@ -17,4 +17,10 @@ class Styles {
     fontSize: 13,
     color: Color(grey),
   );
+
+  static const TextStyle white_14 = TextStyle(
+    fontFamily: poppinsFont,
+    fontSize: 14,
+    color: Colors.white,
+  );
 }
