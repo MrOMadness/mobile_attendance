@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_attendance/nav_bar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: NavBar(),
+      home: const NavBar(),
     );
   }
 }
