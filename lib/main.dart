@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_attendance/nav_bar.dart';
+import 'package:mobile_attendance/services/geolocator.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
+  var currentLocation = await AppGeolocator.determinePosition();
+  print('Current location: $currentLocation');
 }
 
 class MyApp extends StatelessWidget {
