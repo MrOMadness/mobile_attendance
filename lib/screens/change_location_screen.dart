@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobile_attendance/styles.dart';
 
@@ -60,15 +61,23 @@ class ChangeHQLocationScreen extends StatelessWidget {
           onPressed: () async {
             LatLng _currentCenter = await getCenter();
 
-            constants
-                .doc('HQ')
-                .set({
-                  'latitude': _currentCenter.latitude,
-                  'longitude': _currentCenter.longitude,
-                  'last_update': DateTime.now()
-                })
-                .then((value) => print("Constant added")) // Add popup
-                .catchError((error) => print("Failed to add constant: $error"));
+            constants.doc('HQ').set({
+              'latitude': _currentCenter.latitude,
+              'longitude': _currentCenter.longitude,
+              'last_update': DateTime.now()
+            }).then((value) {
+              Fluttertoast.showToast(
+                msg: "Location saved successfully",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+              );
+              Navigator.of(context).pop();
+              // ignore: invalid_return_type_for_catch_error
+            }).catchError((error) => Fluttertoast.showToast(
+                  msg: "Failed to add constant: $error",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                ));
           },
           label: const Text(
             'Save New Location',
