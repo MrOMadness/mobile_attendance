@@ -1,11 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_attendance/nav_bar.dart';
 import 'package:mobile_attendance/services/geolocator.dart';
 
 void main() async {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(); // initialize firebase
+
   var currentLocation = await AppGeolocator.determinePosition();
   print('Current location: $currentLocation');
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
