@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "640992365276",
+    "project_id": "mobile-attendance-firebase",
+    "storage_bucket": "mobile-attendance-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640992365276:android:82ae35dc14bceb1dd5c219",
+        "android_client_info": {
+          "package_name": "com.example.mobile_attendance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "640992365276-8gd492svdki602gnpi81ud1m1akllt9o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBk5LQTAYCr9ci9yPJw5AIBYv4fFgNcAfs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "640992365276-8gd492svdki602gnpi81ud1m1akllt9o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
