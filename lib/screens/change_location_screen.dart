@@ -1,17 +1,18 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobile_attendance/styles.dart';
 
-class ChangeLocationScreen extends StatefulWidget {
-  const ChangeLocationScreen({Key? key}) : super(key: key);
+class ChangeHQLocationScreen extends StatefulWidget {
+  const ChangeHQLocationScreen({Key? key}) : super(key: key);
 
   @override
-  State<ChangeLocationScreen> createState() => _ChangeLocationScreenState();
+  State<ChangeHQLocationScreen> createState() => _ChangeHQLocationScreenState();
 }
 
-class _ChangeLocationScreenState extends State<ChangeLocationScreen> {
+class _ChangeHQLocationScreenState extends State<ChangeHQLocationScreen> {
   final Completer<GoogleMapController> _controller = Completer();
 
   static const CameraPosition savedLocation = CameraPosition(
@@ -47,8 +48,18 @@ class _ChangeLocationScreenState extends State<ChangeLocationScreen> {
         child: FloatingActionButton.extended(
           onPressed: () async {
             LatLng _currentCenter = await getCenter();
-            print(_currentCenter);
-            //TODO: Masukin val ke db
+            CollectionReference constants =
+                FirebaseFirestore.instance.collection('constants');
+
+            constants
+                .doc('HQ')
+                .set({
+                  'latitude': _currentCenter.latitude,
+                  'longitude': _currentCenter.longitude,
+                  'last_update': DateTime.now()
+                })
+                .then((value) => print("Constant added"))
+                .catchError((error) => print("Failed to add constant: $error"));
           },
           label: const Text(
             'Save New Location',
