@@ -24,7 +24,6 @@ class _ChangeHQLocationScreenState extends State<ChangeHQLocationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // TODO: Add back button
       body: Stack(children: [
         GoogleMap(
           initialCameraPosition: savedLocation,
@@ -41,7 +40,20 @@ class _ChangeHQLocationScreenState extends State<ChangeHQLocationScreen> {
               color: Colors.lightBlue,
             ),
           ),
-        )
+        ),
+        Positioned(
+          width: 50,
+          height: 50,
+          top: 25.0,
+          left: 25.0,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                shape: const CircleBorder(),
+                padding: const EdgeInsets.only(right: 0)),
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Icon(Icons.arrow_back, color: Colors.white),
+          ),
+        ),
       ]),
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 30),
