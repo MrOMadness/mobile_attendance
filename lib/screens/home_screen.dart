@@ -19,12 +19,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // G-map position for HQ
     CameraPosition hqPosition = CameraPosition(
       target:
           LatLng(widget.streamData['latitude'], widget.streamData['longitude']),
       zoom: 18, // set zoom level
     );
 
+    // Function to update g-map location
     Future<void> updateLocation() async {
       final GoogleMapController controller = await _controller.future;
       controller.animateCamera(CameraUpdate.newCameraPosition(hqPosition));
@@ -41,21 +43,32 @@ class _HomeScreenState extends State<HomeScreen> {
                     MaterialPageRoute(
                         builder: (context) => ChangeHQLocationScreen(
                             widget.streamData['latitude'],
-                            widget.streamData['longitude'])),
+                            widget.streamData[
+                                'longitude'])), // To Change HQ Location Screen
                   );
                 },
-                child: const RoundedBoxTemplate('Change HQ Location', '')),
+                child: Container(
+                    margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                    child: const RoundedBoxTemplate('Change HQ Location', ''))),
             Container(
-              margin: const EdgeInsets.fromLTRB(5, 10, 5, 0),
+              margin: const EdgeInsets.fromLTRB(5, 20, 5, 0),
               height: 250,
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.blueAccent),
               ),
               child: Stack(children: [
                 FutureBuilder(
-                    future: updateLocation(),
+                    future: updateLocation(), // Update g-map location
                     builder: (context, snapshot) {
                       return GoogleMap(
+                        // Make static g-map, only can zoom
+                        compassEnabled: false,
+                        mapToolbarEnabled: false,
+                        rotateGesturesEnabled: false,
+                        scrollGesturesEnabled: false,
+                        zoomGesturesEnabled: false,
+                        tiltGesturesEnabled: false,
+                        myLocationButtonEnabled: false,
                         initialCameraPosition: hqPosition,
                         onMapCreated: (GoogleMapController controller) async {
                           _controller.complete(controller);

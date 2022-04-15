@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Mobile Attendance', // Title of the app
       theme: ThemeData(
-        primarySwatch: Colors.blue, // Primary theme color
+        primarySwatch: Colors.lightBlue, // Primary theme color
       ),
       home: const NavBar(),
     );

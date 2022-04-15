@@ -1,10 +1,10 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mobile_attendance/screens/history_screen.dart';
 import 'package:mobile_attendance/screens/home_screen.dart';
 import 'package:mobile_attendance/screens/submit_attendance_screen.dart';
+import 'package:mobile_attendance/templates/loading_template.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({Key? key}) : super(key: key);
@@ -14,6 +14,7 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> {
+  // Selected index of botnav | 0 is home, 1 is history
   int _selectedIndex = 0;
   // user colletion reference from firebase
   CollectionReference users = FirebaseFirestore.instance.collection('users');
@@ -37,14 +38,7 @@ class _NavBarState extends State<NavBar> {
           }
           // loading screen
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Container(
-              color: Colors.grey.shade50,
-              child: Center(
-                  child: LoadingAnimationWidget.prograssiveDots(
-                color: Colors.lightBlue,
-                size: 50,
-              )),
-            );
+            return const LoadingTemplate();
           }
 
           Map<String, dynamic> streamData =
@@ -85,8 +79,9 @@ class _NavBarState extends State<NavBar> {
           );
         });
   }
+
+  static const iconList = [
+    Icons.home,
+    Icons.history
+  ]; // Icons for bottom nav bar
 }
-
-const iconList = [Icons.home, Icons.history]; // Icons for bottom nav bar
-
-

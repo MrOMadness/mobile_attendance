@@ -12,8 +12,9 @@ class SubmitAttendanceScreen extends StatelessWidget {
 
   SubmitAttendanceScreen(this.streamData, {Key? key}) : super(key: key);
 
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController usernameController = TextEditingController();
+  final _formKey = GlobalKey<FormState>(); // Key for validation
+  final TextEditingController usernameController =
+      TextEditingController(); // Text editing controller
 
   // Collection reference from firebase
   final CollectionReference users =
@@ -46,7 +47,7 @@ class SubmitAttendanceScreen extends StatelessWidget {
                       // The validator receives the text that the user has entered.
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your username';
+                          return 'Please enter your username'; // If field is empty
                         }
                         return null;
                       },
@@ -63,11 +64,15 @@ class SubmitAttendanceScreen extends StatelessWidget {
                 child: ButtonTemplate('Submit', () async {
                   // Validate returns true if the form is valid, or false otherwise.
                   if (_formKey.currentState!.validate()) {
+                    // Get distance in meters from current location to hq location
                     double distanceInMeters =
                         await checkPositionDistance(streamData);
+                    // If dicatance is < 50 meters
                     if (distanceInMeters < 50) {
+                      // Save Attendance function
                       await saveAttendance(
                           DateTime.now(), distanceInMeters, context, () {
+                        // Toast message if save attendance successful
                         Fluttertoast.showToast(
                           msg: "Attendance submited successfully",
                           toastLength: Toast.LENGTH_SHORT,
@@ -75,9 +80,12 @@ class SubmitAttendanceScreen extends StatelessWidget {
                         );
                         Navigator.of(context).pop();
                       });
+                      // If dicatance is >= 50 meters
                     } else {
+                      // Save Attendance function
                       await saveAttendance(
                           DateTime.now(), distanceInMeters, context, () {
+                        // Toast message if save attendance successful
                         Fluttertoast.showToast(
                           msg: "Range to HQ is > 50m. Move Closer!",
                           toastLength: Toast.LENGTH_SHORT,
@@ -93,6 +101,7 @@ class SubmitAttendanceScreen extends StatelessWidget {
     );
   }
 
+  // return true if < 50 and false if >=50
   checkValid(distanceInMeters) {
     if (distanceInMeters < 50) {
       return true;
@@ -101,6 +110,7 @@ class SubmitAttendanceScreen extends StatelessWidget {
     }
   }
 
+  // if distance < 50, return date time. else, return 0 epoch (pengganti null)
   checkLastValidAttendance(distanceInMeters, dateTime) {
     if (checkValid(distanceInMeters) == true) {
       // Valid Attendance
@@ -111,6 +121,7 @@ class SubmitAttendanceScreen extends StatelessWidget {
     }
   }
 
+  // Calculate distance between current position and HQ
   Future<double> checkPositionDistance(Map<String, dynamic> streamData) async {
     Position userPosition = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.best);
@@ -122,9 +133,10 @@ class SubmitAttendanceScreen extends StatelessWidget {
     return distanceInMeters;
   }
 
+  // Function to save attendance to firestore
   Future saveAttendance(DateTime dateTime, double distanceInMeters, context,
       Function successFunction) async {
-// Check if document exist
+    // Check if document exist
     FirebaseFirestore.instance
         .collection('users')
         .doc(usernameController.text)

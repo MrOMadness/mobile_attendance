@@ -20,7 +20,7 @@ class RoundedBoxTemplate extends StatelessWidget {
               border: Border.all(
                 color: const Color(Styles.lightBlue),
               ),
-              borderRadius: BorderRadius.circular(50)),
+              borderRadius: BorderRadius.circular(10)),
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
           child: Row(

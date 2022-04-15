@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_attendance/screens/history_detail_screen.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mobile_attendance/styles.dart';
+import 'package:mobile_attendance/templates/loading_template.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({Key? key}) : super(key: key);
@@ -19,7 +19,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('History')),
+      appBar: AppBar(
+        title: const Text('History'),
+        elevation: 0,
+      ),
       body: StreamBuilder<QuerySnapshot>(
           stream: _usersStream,
           builder:
@@ -31,19 +34,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
             }
             // loading screen
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Container(
-                color: Colors.grey.shade50,
-                child: Center(
-                    child: LoadingAnimationWidget.prograssiveDots(
-                  color: Colors.lightBlue,
-                  size: 50,
-                )),
-              );
+              return const LoadingTemplate();
             }
             return ListView(
               children: snapshot.data!.docs.map((DocumentSnapshot document) {
                 return FutureBuilder(
-                    future: checkAttendanceToday(document),
+                    future: checkAttendanceToday(
+                        document), // Check if user present/absent
                     builder: (context, snapshot) {
                       return ListTile(
                           title: Text(document.id, style: Styles.black_16),
@@ -56,8 +53,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      HistoryDetailScreen(document.id)),
+                                  builder: (context) => HistoryDetailScreen(
+                                      document.id)), // To detail screen
                             );
                           });
                     });
@@ -67,6 +64,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     );
   }
 
+  // Check if user present/absent
   Future<String> checkAttendanceToday(DocumentSnapshot document) async {
     Timestamp lastValidAttendance = await document.get('last_valid_attendance');
 
