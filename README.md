@@ -15,7 +15,8 @@ Sedangkan fitur pegawai berupa:
 ![user-doc-3](assets/images/user-doc-3.png?raw=true "Title")
 
 ## Technical Documentation
-Coming ASAP!
+Aplikasi ini memakai database firebase firestore. Berikut merupakan gambaran penuh firestore pada aplikasi ini:
+
 ![tech-doc-1](assets/images/tech-doc-1.png?raw=true "Title")
 ![tech-doc-2](assets/images/tech-doc-2.png?raw=true "Title")
 ![tech-doc-3](assets/images/tech-doc-3.png?raw=true "Title")
