@@ -69,6 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         zoomGesturesEnabled: false,
                         tiltGesturesEnabled: false,
                         myLocationButtonEnabled: false,
+                        myLocationEnabled: false,
                         initialCameraPosition: hqPosition,
                         onMapCreated: (GoogleMapController controller) async {
                           _controller.complete(controller);

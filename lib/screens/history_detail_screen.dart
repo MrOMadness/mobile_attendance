@@ -39,19 +39,23 @@ class _HistoryDetailScreenState extends State<HistoryDetailScreen> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const LoadingTemplate();
               }
-              return ListView(
-                children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                  return ListTile(
-                    title: Text(
-                        DateFormat.yMd().add_jm().format(document
-                            .get('date_time')
-                            .toDate()), // Format date for better view
-                        style: Styles.black_16),
-                    subtitle: Text(
-                        "Distance from HQ: ${document.get('distance_in_meters').toStringAsFixed(2)}m", // Format to 2 decimal places
-                        style: Styles.grey_13),
-                  );
-                }).toList(),
+              return Container(
+                margin: const EdgeInsets.only(bottom: 40),
+                child: ListView(
+                  children:
+                      snapshot.data!.docs.map((DocumentSnapshot document) {
+                    return ListTile(
+                      title: Text(
+                          DateFormat.yMd().add_jm().format(document
+                              .get('date_time')
+                              .toDate()), // Format date for better view
+                          style: Styles.black_16),
+                      subtitle: Text(
+                          "Distance from HQ: ${document.get('distance_in_meters').toStringAsFixed(2)}m", // Format to 2 decimal places
+                          style: Styles.grey_13),
+                    );
+                  }).toList(),
+                ),
               );
             }));
   }

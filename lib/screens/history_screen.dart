@@ -36,29 +36,32 @@ class _HistoryScreenState extends State<HistoryScreen> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const LoadingTemplate();
             }
-            return ListView(
-              children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                return FutureBuilder(
-                    future: checkAttendanceToday(
-                        document), // Check if user present/absent
-                    builder: (context, snapshot) {
-                      return ListTile(
-                          title: Text(document.id, style: Styles.black_16),
-                          subtitle: Text(
-                            "Today's attendance: ${snapshot.data}",
-                            style: Styles.grey_13,
-                          ),
-                          trailing: const Icon(Icons.arrow_forward_ios),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HistoryDetailScreen(
-                                      document.id)), // To detail screen
-                            );
-                          });
-                    });
-              }).toList(),
+            return Container(
+              margin: const EdgeInsets.only(bottom: 40),
+              child: ListView(
+                children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                  return FutureBuilder(
+                      future: checkAttendanceToday(
+                          document), // Check if user present/absent
+                      builder: (context, snapshot) {
+                        return ListTile(
+                            title: Text(document.id, style: Styles.black_16),
+                            subtitle: Text(
+                              "Today's attendance: ${snapshot.data}",
+                              style: Styles.grey_13,
+                            ),
+                            trailing: const Icon(Icons.arrow_forward_ios),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HistoryDetailScreen(
+                                        document.id)), // To detail screen
+                              );
+                            });
+                      });
+                }).toList(),
+              ),
             );
           }),
     );

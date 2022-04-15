@@ -29,8 +29,8 @@ class ChangeHQLocationScreen extends StatelessWidget {
             zoom: 18, // set zoom level
           ),
           // To prevent exceeded sample count in FrameTime.
-          myLocationEnabled: false,
-          myLocationButtonEnabled: false,
+          myLocationEnabled: true,
+          myLocationButtonEnabled: true,
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
           },
