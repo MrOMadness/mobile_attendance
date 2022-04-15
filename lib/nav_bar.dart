@@ -1,7 +1,6 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:mobile_attendance/screens/history_screen.dart';
 import 'package:mobile_attendance/screens/home_screen.dart';
 import 'package:mobile_attendance/screens/submit_attendance_screen.dart';
@@ -51,13 +50,10 @@ class _NavBarState extends State<NavBar> {
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: () async {
-                double distanceInMeters =
-                    await checkPositionValidity(streamData);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          SubmitAttendanceScreen(distanceInMeters)),
+                      builder: (context) => SubmitAttendanceScreen(streamData)),
                 );
               },
               child: const Icon(
@@ -79,17 +75,6 @@ class _NavBarState extends State<NavBar> {
             ),
           );
         });
-  }
-
-  Future<double> checkPositionValidity(Map<String, dynamic> streamData) async {
-    Position userPosition = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.best);
-
-    //startLatitude, startLongitude, endLatitude, endLongitude
-    double distanceInMeters = Geolocator.distanceBetween(streamData['latitude'],
-        streamData['longitude'], userPosition.latitude, userPosition.longitude);
-
-    return distanceInMeters;
   }
 }
 
