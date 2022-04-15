@@ -107,7 +107,7 @@ class SubmitAttendanceScreen extends StatelessWidget {
       return dateTime;
     } else {
       // Not Valid
-
+      return null;
     }
   }
 
@@ -124,28 +124,71 @@ class SubmitAttendanceScreen extends StatelessWidget {
 
   Future saveAttendance(DateTime dateTime, double distanceInMeters, context,
       Function successFunction) async {
+// Check if document exist
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(usernameController.text)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) async {
+      if (!documentSnapshot.exists) {
+        //if document doesn't exist, create new
+        await users
+            .doc(usernameController.text)
+            .set({
+              'user_name': usernameController.text,
+              'last_valid_attendance':
+                  checkLastValidAttendance(distanceInMeters, dateTime),
+            }, SetOptions(merge: true))
+            .then((value) => print("User Saved"))
+            .catchError((error) => print("Failed to save user: $error"));
+      } else {
+        //if document exists, update the document
+        if (checkValid(distanceInMeters)) {
+          // if valid
+          await users
+              .doc(usernameController.text)
+              .set({
+                'user_name': usernameController.text,
+                'last_valid_attendance':
+                    checkLastValidAttendance(distanceInMeters, dateTime),
+              }, SetOptions(merge: true))
+              .then((value) => print("User Saved"))
+              .catchError((error) => print("Failed to save user: $error"));
+        } else {
+          // not valid
+          await users
+              .doc(usernameController.text)
+              .set({
+                'user_name': usernameController.text,
+              }, SetOptions(merge: true))
+              .then((value) => print("User Saved"))
+              .catchError((error) => print("Failed to save user: $error"));
+        }
+      }
+    });
+
     // For user document field
-    if (checkValid(distanceInMeters)) {
-      // if valid
-      await users
-          .doc(usernameController.text)
-          .set({
-            'user_name': usernameController.text,
-            'last_valid_attendance':
-                checkLastValidAttendance(distanceInMeters, dateTime),
-          }, SetOptions(merge: true))
-          .then((value) => print("User Saved"))
-          .catchError((error) => print("Failed to save user: $error"));
-    } else {
-      // not valid
-      await users
-          .doc(usernameController.text)
-          .set({
-            'user_name': usernameController.text,
-          }, SetOptions(merge: true))
-          .then((value) => print("User Saved"))
-          .catchError((error) => print("Failed to save user: $error"));
-    }
+    // if (checkValid(distanceInMeters)) {
+    //   // if valid
+    //   await users
+    //       .doc(usernameController.text)
+    //       .set({
+    //         'user_name': usernameController.text,
+    //         'last_valid_attendance':
+    //             checkLastValidAttendance(distanceInMeters, dateTime),
+    //       }, SetOptions(merge: true))
+    //       .then((value) => print("User Saved"))
+    //       .catchError((error) => print("Failed to save user: $error"));
+    // } else {
+    //   // not valid
+    //   await users
+    //       .doc(usernameController.text)
+    //       .set({
+    //         'user_name': usernameController.text,
+    //       }, SetOptions(merge: true))
+    //       .then((value) => print("User Saved"))
+    //       .catchError((error) => print("Failed to save user: $error"));
+    // }
 
     // For attendance document field
     await users
