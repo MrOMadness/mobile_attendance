@@ -1,3 +1,5 @@
 # mobile_attendance
-Librabies:
-https://pub.dev/packages/geolocator
+
+# Dependencies
+geolocator: https://pub.dev/packages/geolocator
+google maps: 
