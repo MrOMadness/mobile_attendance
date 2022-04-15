@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mobile_attendance/screens/history_screen.dart';
 import 'package:mobile_attendance/screens/home_screen.dart';
+import 'package:mobile_attendance/screens/submit_attendance_screen.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({Key? key}) : super(key: key);
@@ -14,6 +15,8 @@ class NavBar extends StatefulWidget {
 
 class _NavBarState extends State<NavBar> {
   int _selectedIndex = 0;
+  // user colletion reference from firebase
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,7 @@ class _NavBarState extends State<NavBar> {
           }
           // loading screen
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text("Loading");
+            return const Text("Loading"); //TODO: Bikin loading screen
           }
 
           Map<String, dynamic> streamData =
@@ -48,8 +51,14 @@ class _NavBarState extends State<NavBar> {
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: () async {
-                await checkPositionValidity();
-                print('done');
+                double distanceInMeters =
+                    await checkPositionValidity(streamData);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          SubmitAttendanceScreen(distanceInMeters)),
+                );
               },
               child: const Icon(
                 Icons.qr_code_scanner_outlined,
@@ -71,13 +80,19 @@ class _NavBarState extends State<NavBar> {
           );
         });
   }
+
+  Future<double> checkPositionValidity(Map<String, dynamic> streamData) async {
+    Position userPosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best);
+
+    //startLatitude, startLongitude, endLatitude, endLongitude
+    double distanceInMeters = Geolocator.distanceBetween(streamData['latitude'],
+        streamData['longitude'], userPosition.latitude, userPosition.longitude);
+
+    return distanceInMeters;
+  }
 }
 
 const iconList = [Icons.home, Icons.account_circle]; // Icons for bottom nav bar
 
-Future<void> checkPositionValidity() async {
-  Position userPosition = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.best);
 
-  print('');
-}
