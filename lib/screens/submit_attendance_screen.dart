@@ -107,7 +107,7 @@ class SubmitAttendanceScreen extends StatelessWidget {
       return dateTime;
     } else {
       // Not Valid
-      return null;
+      return DateTime.fromMicrosecondsSinceEpoch(0); //TODO: ganti?
     }
   }
 
