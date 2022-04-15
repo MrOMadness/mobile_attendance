@@ -28,6 +28,7 @@ class Styles {
   );
 
   static const TextStyle black_15 = TextStyle(
+    color: Colors.black,
     fontFamily: poppinsFont,
     fontSize: 15,
   );

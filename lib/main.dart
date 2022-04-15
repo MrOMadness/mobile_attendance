@@ -6,14 +6,9 @@ import 'package:flutter/services.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(); // initialize firebase
-  SystemChrome.setEnabledSystemUIMode(
-      SystemUiMode.leanBack); // Remove android status bar
 
-  // Get current user location an check for errors
-  // var currentLocation = await AppGeolocator.determinePosition();
-
-  // print('Current location: $currentLocation');
-  //TODO: Tambahin sesuatu klo blm konek ke inet
+  // Remove android status bar
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
 
   runApp(const MyApp()); // Run the app
 }

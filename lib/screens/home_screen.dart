@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobile_attendance/screens/change_location_screen.dart';
+import 'package:mobile_attendance/styles.dart';
 import 'package:mobile_attendance/templates/rounded_box_template.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -47,6 +48,9 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               margin: const EdgeInsets.fromLTRB(5, 10, 5, 0),
               height: 250,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.blueAccent),
+              ),
               child: Stack(children: [
                 FutureBuilder(
                     future: updateLocation(),
@@ -68,6 +72,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ]),
+            ),
+            Container(
+              margin: const EdgeInsets.fromLTRB(5, 10, 5, 0),
+              child: RichText(
+                text: const TextSpan(
+                  text:
+                      'Please make sure your phone is connected to the internet!\n\nFor documentation, please refer to ',
+                  style: Styles.black_15,
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: 'https://github.com/MrOMadness/mobile_attendance',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        )),
+                  ],
+                ),
+              ),
             )
           ]),
     );

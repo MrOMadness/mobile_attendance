@@ -17,7 +17,7 @@ class ButtonTemplate extends StatelessWidget {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-              primary: const Color(Styles.darkBlue),
+              primary: Colors.lightBlue,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20))),
           child: Text(
