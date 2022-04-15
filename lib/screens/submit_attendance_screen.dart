@@ -66,7 +66,8 @@ class SubmitAttendanceScreen extends StatelessWidget {
                     double distanceInMeters =
                         await checkPositionDistance(streamData);
                     if (distanceInMeters < 50) {
-                      await saveAttendance(distanceInMeters, context, () {
+                      await saveAttendance(
+                          DateTime.now(), distanceInMeters, context, () {
                         Fluttertoast.showToast(
                           msg: "Attendance submited successfully",
                           toastLength: Toast.LENGTH_SHORT,
@@ -75,7 +76,8 @@ class SubmitAttendanceScreen extends StatelessWidget {
                         Navigator.of(context).pop();
                       });
                     } else {
-                      await saveAttendance(distanceInMeters, context, () {
+                      await saveAttendance(
+                          DateTime.now(), distanceInMeters, context, () {
                         Fluttertoast.showToast(
                           msg: "Range to HQ is > 50m. Move Closer!",
                           toastLength: Toast.LENGTH_SHORT,
@@ -99,6 +101,16 @@ class SubmitAttendanceScreen extends StatelessWidget {
     }
   }
 
+  checkLastValidAttendance(distanceInMeters, dateTime) {
+    if (checkValid(distanceInMeters) == true) {
+      // Valid Attendance
+      return dateTime;
+    } else {
+      // Not Valid
+
+    }
+  }
+
   Future<double> checkPositionDistance(Map<String, dynamic> streamData) async {
     Position userPosition = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.best);
@@ -110,22 +122,38 @@ class SubmitAttendanceScreen extends StatelessWidget {
     return distanceInMeters;
   }
 
-  Future saveAttendance(
-      distanceInMeters, context, Function successFunction) async {
-    await users
-        .doc(usernameController.text)
-        .set({
-          'user_name': usernameController.text,
-        })
-        .then((value) => print("User Saved"))
-        .catchError((error) => print("Failed to save user: $error"));
+  Future saveAttendance(DateTime dateTime, double distanceInMeters, context,
+      Function successFunction) async {
+    // For user document field
+    if (checkValid(distanceInMeters)) {
+      // if valid
+      await users
+          .doc(usernameController.text)
+          .set({
+            'user_name': usernameController.text,
+            'last_valid_attendance':
+                checkLastValidAttendance(distanceInMeters, dateTime),
+          }, SetOptions(merge: true))
+          .then((value) => print("User Saved"))
+          .catchError((error) => print("Failed to save user: $error"));
+    } else {
+      // not valid
+      await users
+          .doc(usernameController.text)
+          .set({
+            'user_name': usernameController.text,
+          }, SetOptions(merge: true))
+          .then((value) => print("User Saved"))
+          .catchError((error) => print("Failed to save user: $error"));
+    }
 
+    // For attendance document field
     await users
         .doc(usernameController.text)
         .collection('Attendances')
-        .doc(DateTime.now().toString())
+        .doc(dateTime.toString())
         .set({
-      'date_time': DateTime.now(),
+      'date_time': dateTime,
       'is_valid': checkValid(distanceInMeters),
       'distance_in_meters': distanceInMeters
     }).then((value) {
