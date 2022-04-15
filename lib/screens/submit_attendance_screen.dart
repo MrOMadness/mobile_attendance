@@ -114,6 +114,14 @@ class SubmitAttendanceScreen extends StatelessWidget {
       distanceInMeters, context, Function successFunction) async {
     await users
         .doc(usernameController.text)
+        .set({
+          'user_name': usernameController.text,
+        })
+        .then((value) => print("User Saved"))
+        .catchError((error) => print("Failed to save user: $error"));
+
+    await users
+        .doc(usernameController.text)
         .collection('Attendances')
         .doc(DateTime.now().toString())
         .set({
