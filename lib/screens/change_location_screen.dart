@@ -28,14 +28,17 @@ class ChangeHQLocationScreen extends StatelessWidget {
             target: LatLng(latitude, longitude),
             zoom: 18, // set zoom level
           ),
-          myLocationEnabled: true,
+          // To prevent exceeded sample count in FrameTime.
+          myLocationEnabled: false,
+          myLocationButtonEnabled: false,
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
           },
         ),
         // Pin marker
-        const Center(
-          child: Positioned(
+        const Padding(
+          padding: EdgeInsets.only(bottom: 20),
+          child: Center(
             child: Icon(
               Icons.person_pin_circle,
               size: 40,

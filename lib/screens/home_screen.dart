@@ -75,8 +75,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       );
                     }),
-                const Center(
-                  child: Positioned(
+                // Pin Marker
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 20),
+                  child: Center(
                     child: Icon(
                       Icons.person_pin_circle,
                       size: 40,
