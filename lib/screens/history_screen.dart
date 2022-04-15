@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_attendance/screens/history_detail_screen.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:mobile_attendance/styles.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({Key? key}) : super(key: key);
@@ -45,9 +46,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     future: checkAttendanceToday(document),
                     builder: (context, snapshot) {
                       return ListTile(
-                          title: Text(document.id),
-                          subtitle:
-                              Text("Today's attendance: ${snapshot.data}"),
+                          title: Text(document.id, style: Styles.black_16),
+                          subtitle: Text(
+                            "Today's attendance: ${snapshot.data}",
+                            style: Styles.grey_13,
+                          ),
                           trailing: const Icon(Icons.arrow_forward_ios),
                           onTap: () {
                             Navigator.push(

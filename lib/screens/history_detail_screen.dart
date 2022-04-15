@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:mobile_attendance/styles.dart';
 import 'package:mobile_attendance/templates/appbar_default.dart';
 import 'package:intl/intl.dart';
 
@@ -48,11 +49,14 @@ class _HistoryDetailScreenState extends State<HistoryDetailScreen> {
               return ListView(
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
                   return ListTile(
-                    title: Text(DateFormat.yMd()
-                        .add_jm()
-                        .format(document.get('date_time').toDate())),
+                    title: Text(
+                        DateFormat.yMd()
+                            .add_jm()
+                            .format(document.get('date_time').toDate()),
+                        style: Styles.black_16),
                     subtitle: Text(
-                        "Distance from HQ: ${document.get('distance_in_meters').toStringAsFixed(2)}m"),
+                        "Distance from HQ: ${document.get('distance_in_meters').toStringAsFixed(2)}m",
+                        style: Styles.grey_13),
                   );
                 }).toList(),
               );
