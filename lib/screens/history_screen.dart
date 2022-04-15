@@ -10,7 +10,7 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
-  // Stream of DocumentSnapshot from firebase
+  // Stream of QuerySnapshot from firebase
   final Stream<QuerySnapshot> _usersStream =
       FirebaseFirestore.instance.collection('users').snapshots();
 
@@ -45,7 +45,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      const HistoryDetailScreen()),
+                                      HistoryDetailScreen(document.id)),
                             );
                           });
                     });

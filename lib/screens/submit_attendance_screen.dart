@@ -193,7 +193,7 @@ class SubmitAttendanceScreen extends StatelessWidget {
     // For attendance document field
     await users
         .doc(usernameController.text)
-        .collection('Attendances')
+        .collection('attendances')
         .doc(dateTime.toString())
         .set({
       'date_time': dateTime,

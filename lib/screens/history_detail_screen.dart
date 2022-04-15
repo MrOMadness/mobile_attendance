@@ -1,7 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_attendance/templates/appbar_default.dart';
+import 'package:intl/intl.dart';
 
 class HistoryDetailScreen extends StatefulWidget {
-  const HistoryDetailScreen({Key? key}) : super(key: key);
+  final String userId;
+
+  const HistoryDetailScreen(this.userId, {Key? key}) : super(key: key);
 
   @override
   State<HistoryDetailScreen> createState() => _HistoryDetailScreenState();
@@ -10,6 +15,38 @@ class HistoryDetailScreen extends StatefulWidget {
 class _HistoryDetailScreenState extends State<HistoryDetailScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    // Stream of QuerySnapshot from firebase
+    final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.userId)
+        .collection('attendances')
+        .snapshots();
+
+    return Scaffold(
+        appBar: const AppBarDefault(),
+        body: StreamBuilder<QuerySnapshot>(
+            stream: _usersStream,
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              // error screen
+              if (snapshot.hasError) {
+                return const Text('Something went wrong');
+              }
+              // loading screen
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Text("Loading"); //TODO: Bikin loading screen
+              }
+              return ListView(
+                children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                  return ListTile(
+                    title: Text(DateFormat.yMd()
+                        .add_jm()
+                        .format(document.get('date_time').toDate())),
+                    subtitle: Text(
+                        "Distance from HQ: ${document.get('distance_in_meters').toStringAsFixed(2)}m"),
+                  );
+                }).toList(),
+              );
+            }));
   }
 }
