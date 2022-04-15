@@ -60,7 +60,7 @@ class _NavBarState extends State<NavBar> {
                 );
               },
               child: const Icon(
-                Icons.qr_code_scanner_outlined,
+                Icons.add,
                 color: Colors.black,
               ),
             ),
