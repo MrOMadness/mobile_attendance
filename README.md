@@ -16,6 +16,9 @@ Sedangkan fitur pegawai berupa:
 
 ## Technical Documentation
 Coming ASAP!
+![tech-doc-1](assets/images/tech-doc-1.png?raw=true "Title")
+![tech-doc-2](assets/images/tech-doc-2.png?raw=true "Title")
+![tech-doc-3](assets/images/tech-doc-3.png?raw=true "Title")
 
 ## Dependencies
 - geolocator: https://pub.dev/packages/geolocator
