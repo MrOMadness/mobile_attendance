@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mobile_attendance/templates/appbar_default.dart';
 import 'package:intl/intl.dart';
 
@@ -35,7 +36,14 @@ class _HistoryDetailScreenState extends State<HistoryDetailScreen> {
               }
               // loading screen
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Text("Loading"); //TODO: Bikin loading screen
+                return Container(
+                  color: Colors.grey.shade50,
+                  child: Center(
+                      child: LoadingAnimationWidget.prograssiveDots(
+                    color: Colors.lightBlue,
+                    size: 50,
+                  )),
+                );
               }
               return ListView(
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
