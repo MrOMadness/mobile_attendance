@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_attendance/screens/history_detail_screen.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('History')),
       body: StreamBuilder<QuerySnapshot>(
           stream: _usersStream,
           builder:
@@ -33,11 +35,19 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 return FutureBuilder(
                     future: checkAttendanceToday(document),
                     builder: (context, snapshot) {
-                      print(snapshot.data);
                       return ListTile(
-                        title: Text(document.id),
-                        subtitle: Text("Today's attendance: ${snapshot.data}"),
-                      );
+                          title: Text(document.id),
+                          subtitle:
+                              Text("Today's attendance: ${snapshot.data}"),
+                          trailing: const Icon(Icons.arrow_forward_ios),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const HistoryDetailScreen()),
+                            );
+                          });
                     });
               }).toList(),
             );
