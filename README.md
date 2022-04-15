@@ -1,5 +1,13 @@
 # Mobile Attendance
-Mobile Attendance merupakan 
+Mobile Attendance merupakan sebuah aplikasi yang dapat melakukan absensi bedasarkan lokasi pengguna saat ini. Dengan menggunakan geolocator, aplikasi ini dapat menentukan jarak antara pengguna dan HQ. Jika jarak tersebut >= 50 meter, maka absensi akan ditolak. Jika jarak tersebut < 50 meter, maka absensi pengguna akan diterima oleh sistem. Seluruh absensi baik yang diterima maupun ditolak akan disimpan kedalam sistem dan dapat dilihat melalui halaman history.
+
+Perlu dicatat juga bahwa aplikasi ini mempunyai fitur HQ dan juga fitur pegawai. Dimana fitur HQ berupa:
+- Change HQ Location
+- All History
+
+Sedangkan fitur pegawai berupa:
+- Submit Attendance
+- Specific User History
 
 ## User Documentation
 
@@ -17,3 +25,4 @@ Mobile Attendance merupakan
 - Seperate Worker and HQ app
 - Add feature to scan QR before being able to submit attendance. Why? Karena bisa aja dia di gedung yang sama tetapi di lantai lain (di cafe), atau di gedung sebelah yang berjarak < 50m. QR akan memaksa karyawan untuk scan di lantai kerja mereka. Setiap hari QR harus berganti agar tidak bisa dipalsukan
 - Time limit. Contoh: Hanya menerima pukul 8.00-9.00, sisanya terhitung telat/absen
+- Sign-in untuk user
