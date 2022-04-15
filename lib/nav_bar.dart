@@ -78,6 +78,6 @@ class _NavBarState extends State<NavBar> {
   }
 }
 
-const iconList = [Icons.home, Icons.account_circle]; // Icons for bottom nav bar
+const iconList = [Icons.home, Icons.history]; // Icons for bottom nav bar
 
 
