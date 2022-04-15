@@ -24,7 +24,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             // error screen
             if (snapshot.hasError) {
-              return const Text('Something went wrong');
+              return Center(
+                  child: Text('Something went wrong: ${snapshot.error}'));
             }
             // loading screen
             if (snapshot.connectionState == ConnectionState.waiting) {

@@ -31,7 +31,8 @@ class _NavBarState extends State<NavBar> {
             (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           // error screen
           if (snapshot.hasError) {
-            return const Text('Something went wrong');
+            return Center(
+                child: Text('Something went wrong: ${snapshot.error}'));
           }
           // loading screen
           if (snapshot.connectionState == ConnectionState.waiting) {

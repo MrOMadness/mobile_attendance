@@ -167,29 +167,6 @@ class SubmitAttendanceScreen extends StatelessWidget {
       }
     });
 
-    // For user document field
-    // if (checkValid(distanceInMeters)) {
-    //   // if valid
-    //   await users
-    //       .doc(usernameController.text)
-    //       .set({
-    //         'user_name': usernameController.text,
-    //         'last_valid_attendance':
-    //             checkLastValidAttendance(distanceInMeters, dateTime),
-    //       }, SetOptions(merge: true))
-    //       .then((value) => print("User Saved"))
-    //       .catchError((error) => print("Failed to save user: $error"));
-    // } else {
-    //   // not valid
-    //   await users
-    //       .doc(usernameController.text)
-    //       .set({
-    //         'user_name': usernameController.text,
-    //       }, SetOptions(merge: true))
-    //       .then((value) => print("User Saved"))
-    //       .catchError((error) => print("Failed to save user: $error"));
-    // }
-
     // For attendance document field
     await users
         .doc(usernameController.text)
