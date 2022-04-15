@@ -1,8 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_attendance/nav_bar.dart';
-import 'package:mobile_attendance/services/geolocator.dart';
 import 'package:flutter/services.dart';
 
 void main() async {
@@ -12,10 +10,10 @@ void main() async {
       SystemUiMode.leanBack); // Remove android status bar
 
   // Get current user location an check for errors
-  var currentLocation = await AppGeolocator.determinePosition();
-  if (kDebugMode) {
-    print('Current location: $currentLocation');
-  }
+  // var currentLocation = await AppGeolocator.determinePosition();
+
+  // print('Current location: $currentLocation');
+  //TODO: Tambahin sesuatu klo blm konek ke inet
 
   runApp(const MyApp()); // Run the app
 }
