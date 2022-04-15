@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobile_attendance/screens/change_location_screen.dart';
 import 'package:mobile_attendance/templates/rounded_box_template.dart';
 
@@ -46,7 +47,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                   data['latitude'], data['longitude'])),
                         );
                       },
-                      child: const RoundedBoxTemplate('Current Location', ''))
+                      child:
+                          const RoundedBoxTemplate('Change HQ Location', '')),
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(5, 10, 5, 0),
+                    height: 250,
+                    child: Stack(children: [
+                      GoogleMap(
+                        initialCameraPosition: CameraPosition(
+                          target: LatLng(data['latitude'], data['longitude']),
+                          zoom: 18, // set zoom level
+                        ),
+                      ),
+                      const Center(
+                        child: Positioned(
+                          child: Icon(
+                            Icons.person_pin_circle,
+                            size: 40,
+                            color: Colors.lightBlue,
+                          ),
+                        ),
+                      ),
+                    ]),
+                  )
                 ]),
           );
         });
