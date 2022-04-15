@@ -10,6 +10,12 @@ Sedangkan fitur pegawai berupa:
 - Specific User History
 
 ## User Documentation
+![user-doc-1](assets/images/user-doc-1.png?raw=true "Title")
+![user-doc-2](assets/images/user-doc-2.png?raw=true "Title")
+![user-doc-3](assets/images/user-doc-3.png?raw=true "Title")
+
+## Technical Documentation
+Coming ASAP!
 
 ## Dependencies
 - geolocator: https://pub.dev/packages/geolocator
